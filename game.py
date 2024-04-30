@@ -36,7 +36,7 @@ class Game():
             self.window.fill((255, 255, 255))
 
 
-            ### OBJECT ###
+            ### PLATFORM ###
             if number_platform == 1:
                 platform = Platform(pos_platform[0][0],
                                     pos_platform[0][1])
@@ -53,7 +53,19 @@ class Game():
                 number_platform += 1
                 print(pos_platform)
 
-            ### SCORE ###
+            k = 0
+            for platform in all_platforms:
+                platform.move()
+                if platform.rect.y <= HEIGHT:
+                    platform.kill()
+                    number_platform -= 1
+                    pos_platform = pos_platform[1:]
+                    pos_platform.append((0, 0))
+                pos_platform[k] = (platform.rect.x, platform.rect.y)
+                k += 1
+
+
+            ### SCORE/BANANE ###
             while number_banane < 5:
                 banane = Banane()
                 all_sprites.add(banane)

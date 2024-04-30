@@ -10,7 +10,7 @@ class Platform(pygame.sprite.Sprite):
         self.image = ["sprite/platform.png"]
         self.image = pygame.image.load(self.image[0])
         self.rect = self.image.get_rect()
-        self.vel = 1
+        self.vel_y = 1
 
         self.min_distance_y_platform = 125
         self.max_distance_y_platform = 175
@@ -22,3 +22,6 @@ class Platform(pygame.sprite.Sprite):
         self.pos_y = randint(self.min_distance_y_platform + last_platform_y, self.max_distance_y_platform + last_platform_y)
 
         self.rect.center = (self.pos_x, self.pos_y)
+
+    def move(self):
+        self.rect.y += self.vel_y
