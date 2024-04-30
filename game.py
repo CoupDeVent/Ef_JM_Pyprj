@@ -15,53 +15,66 @@ class Game():
         self.window.fill((255, 255, 255))
     def run(self):
         self.load()
+        number_platform = 1
+        pos_platform = [(320, 50), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)]
+        number_banane = 0
+        score = 0
 
         all_platforms = pygame.sprite.Group()
-        all_sprites = pygame.sprite.Group()
         all_bananes = pygame.sprite.Group()
+        all_sprites = pygame.sprite.Group()
 
         player = Player()
         all_sprites.add(player)
 
-        banane = Banane()
-        all_bananes.add(banane)
-        all_sprites.add(banane)
-
-        p_def = Platform()
-        p_def.spawn_default()
-        all_platforms.add(p_def)
-        all_sprites.add(p_def)
-
-        area = [(150,250),(300,400),(450,550),(600,650)]
-        for k in range(4):
-            platform = Platform()
-            platform.spawn_platform(area[k])
-            all_sprites.add(platform)
-            all_platforms.add(platform)
-
         run = True
         while run:
+            ### INIT ###
             for event in pygame.event.get():
                 if event.type == QUIT:
                     run = False
             self.window.fill((255, 255, 255))
 
+
+            ### OBJECT ###
+            if number_platform == 1:
+                platform = Platform(pos_platform[0][0],
+                                    pos_platform[0][1])
+                all_platforms.add(platform)
+                all_sprites.add(platform)
+
+            while number_platform < len(pos_platform):
+                platform = Platform(pos_platform[number_platform-1][0],
+                                    pos_platform[number_platform-1][1])
+                all_platforms.add(platform)
+                all_sprites.add(platform)
+
+                pos_platform[number_platform] = platform.rect.center
+                number_platform += 1
+                print(pos_platform)
+
+            ### SCORE ###
+            while number_banane < 5:
+                banane = Banane()
+                all_sprites.add(banane)
+                all_bananes.add(banane)
+                number_banane += 1
+
+            font = pygame.font.SysFont("Lato", 15, False)
+            score_text = font.render("Score: " + str(score), True, (0, 0, 0))
+            self.window.blit(score_text, (10, 10))
+
+            self.hits_banane = pygame.sprite.spritecollide(player, all_bananes, True)
+            if self.hits_banane:
+                score += 1
+                number_banane -= 1
+
+
+            ### UPDATE ###
             player.move(all_platforms)
             player.update(all_platforms)
             for entity in all_sprites:
                 self.window.blit(entity.image, entity.rect)
-
-            # Score
-            font = pygame.font.SysFont("Lato", 30, False)
-            score_text = font.render("Score: " + str(banane.score), True, (0, 0, 0))
-            self.window.blit(score_text, (10, 10))
-
-            # hit banane player
-            self.hits_banane = pygame.sprite.spritecollide(player, all_bananes, False)
-            if self.hits_banane:
-                banane.pos_x = 0
-                banane.pos_y = 0
-                banane.score += 1
 
 
             pygame.display.update()

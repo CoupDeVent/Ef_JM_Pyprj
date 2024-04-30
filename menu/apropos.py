@@ -3,7 +3,6 @@ import vars
 
 # Initialisation de la librairie pygame
 pygame.init()
-
 # Création écran
 screen = pygame.display.set_mode((vars.largeur, vars.hauteur))  #On definie la largeur et la longeur de la fenêtre
 

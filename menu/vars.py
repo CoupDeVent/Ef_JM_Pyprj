@@ -1,7 +1,8 @@
 from enum import Enum
 import pygame #import la librairy pygame
+pygame.font.init()
 
-# hauteur et largeur de base 
+# hauteur et largeur de base
 fond = pygame.image.load("assets/Fond.jpeg")
 largeur = fond.get_width() # Affecte à la variable largeur, la largeur de l'image Fond.jpeg 
 hauteur = fond.get_height()# Affecte à la variable hauteur, la hauteur de l'image Fond.jpeg 
