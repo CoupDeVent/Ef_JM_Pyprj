@@ -4,12 +4,14 @@ from player import *
 from platform import *
 from banane import *
 
+
+
 class Game():
     def __int__(self):
         super().__int__()
     def load(self):
         self.FPS = pygame.time.Clock()
-        self.window = pygame.display.set_mode((640, 750))
+        self.window = pygame.display.set_mode((WIDTH, HEIGHT))
         self.window.fill((255, 255, 255))
     def run(self):
         self.load()
