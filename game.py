@@ -16,7 +16,7 @@ class Game():
     def run(self):
         self.load()
         number_platform = 1
-        pos_platform = [(320, 50), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)]
+        pos_platform = [(320, 700), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)]
         number_banane = 0
         score = 0
 
@@ -46,23 +46,27 @@ class Game():
             while number_platform < len(pos_platform):
                 platform = Platform(pos_platform[number_platform-1][0],
                                     pos_platform[number_platform-1][1])
-                all_platforms.add(platform)
-                all_sprites.add(platform)
+                if pygame.sprite.spritecollide(platform, all_platforms, True):
+                    pygame.sprite.Sprite.kill(platform)
+                else:
+                    all_platforms.add(platform)
+                    all_sprites.add(platform)
 
-                pos_platform[number_platform] = platform.rect.center
-                number_platform += 1
-                print(pos_platform)
+                    pos_platform[number_platform] = platform.rect.center
+                    number_platform += 1
 
             k = 0
             for platform in all_platforms:
                 platform.move()
-                if platform.rect.y <= HEIGHT:
-                    platform.kill()
+                pos_platform[k] = platform.rect.center
+                if platform.rect.y > 750:
+                    pygame.sprite.Sprite.kill(platform)
+                    print("len all plat : ", len(all_platforms))
                     number_platform -= 1
-                    pos_platform = pos_platform[1:]
+                    del pos_platform[k]
                     pos_platform.append((0, 0))
-                pos_platform[k] = (platform.rect.x, platform.rect.y)
                 k += 1
+                print(pos_platform)
 
 
             ### SCORE/BANANE ###
