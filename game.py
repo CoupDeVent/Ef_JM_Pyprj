@@ -1,8 +1,11 @@
 import pygame
 from pygame.locals import *
+
 from player import *
 from platform import *
 from banane import *
+from jungle import *
+from score import *
 
 
 
@@ -16,7 +19,7 @@ class Game():
     def run(self):
         self.load()
         number_platform = 1
-        pos_platform = [(320, 700), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)]
+        pos_platform = [(350, 700), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0), (0, 0)]
         number_banane = 0
         score = 0
 
@@ -24,6 +27,8 @@ class Game():
         all_bananes = pygame.sprite.Group()
         all_sprites = pygame.sprite.Group()
 
+        jungle = Jungle()
+        all_sprites.add(jungle)
         player = Player()
         all_sprites.add(player)
 
@@ -33,13 +38,12 @@ class Game():
             for event in pygame.event.get():
                 if event.type == QUIT:
                     run = False
-            self.window.fill((255, 255, 255))
 
 
             ### PLATFORM ###
             if number_platform == 1:
-                platform = Platform(pos_platform[0][0],
-                                    pos_platform[0][1])
+                platform = Platform(0, 0)
+                platform.start()
                 all_platforms.add(platform)
                 all_sprites.add(platform)
 
@@ -47,7 +51,7 @@ class Game():
                 platform = Platform(pos_platform[number_platform-1][0],
                                     pos_platform[number_platform-1][1])
                 if pygame.sprite.spritecollide(platform, all_platforms, True):
-                    pygame.sprite.Sprite.kill(platform)
+                    pass
                 else:
                     all_platforms.add(platform)
                     all_sprites.add(platform)
@@ -61,7 +65,6 @@ class Game():
                 pos_platform[k] = platform.rect.center
                 if platform.rect.y > 750:
                     pygame.sprite.Sprite.kill(platform)
-                    print("len all plat : ", len(all_platforms))
                     number_platform -= 1
                     del pos_platform[k]
                     pos_platform.append((0, 0))
@@ -70,19 +73,18 @@ class Game():
 
 
             ### SCORE/BANANE ###
+            score = Score(0)
+            all_sprites.add(score)
+
             while number_banane < 5:
                 banane = Banane()
                 all_sprites.add(banane)
                 all_bananes.add(banane)
                 number_banane += 1
 
-            font = pygame.font.SysFont("Lato", 15, False)
-            score_text = font.render("Score: " + str(score), True, (0, 0, 0))
-            self.window.blit(score_text, (10, 10))
-
-            self.hits_banane = pygame.sprite.spritecollide(player, all_bananes, True)
-            if self.hits_banane:
-                score += 1
+            hits_banane = pygame.sprite.spritecollide(player, all_bananes, True)
+            if hits_banane:
+                score.add_banane(1)
                 number_banane -= 1
 
 

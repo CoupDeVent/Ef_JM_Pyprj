@@ -22,12 +22,11 @@ class Player(pygame.sprite.Sprite):
         self.pos = vec((320, 650))
         self.vel = vec(0, 0)
         self.acc = vec(0, 0)
-        self.ACC = 0.5
+        self.ACC = 0.7
         self.FRIC = -0.15
 
-    def jump(self, all_platforms):
-        self.hits = pygame.sprite.spritecollide(self, all_platforms, False)
-        if self.hits and not self.jumping:
+    def jump(self):
+        if not self.jumping:
             self.vel.y = -15
             self.jumping = True
 
@@ -50,7 +49,7 @@ class Player(pygame.sprite.Sprite):
             self.image = self.image_run_left
             self.last_key_pressed = "left"
         if self.pressed_keys[K_UP]:
-            self.jump(all_platforms)
+            self.jump()
 
 
         self.acc.x += self.vel.x * self.FRIC
@@ -76,9 +75,3 @@ class Player(pygame.sprite.Sprite):
             elif self.vel.y < 0:
                 self.vel.y = 0
                 self.pos.y = self.hits[0].rect.bottom + 75
-                self.jumping = True
-
-            """if self.rect.right == self.hits[0].rect.left and (self.rect.top < self.hits[0].rect.top or self.rect.bottom > self.hits[0].rect.bottom) and self.vel.x > 0:
-                self.vel.x = 0
-                self.rect.x = self.hits[0].rect.left
-                self.pos.x = self.rect.x - 26"""
