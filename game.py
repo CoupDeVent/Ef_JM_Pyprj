@@ -1,4 +1,4 @@
-import pygame
+import pygame, os
 from pygame.locals import *
 from enum import Enum
 
@@ -22,45 +22,39 @@ class Game():
         super().__int__()
     def load(self):
         self.FPS = pygame.time.Clock()
-        self.window = pygame.display.set_mode((1520, 660))
+        pygame.display.set_caption("Jumping Monke")
+        pygame.display.set_icon(pygame.transform.scale(pygame.image.load("sprite/banane.png"), (45,45)))
+        self.window = pygame.display.set_mode((1520, 660), pygame.RESIZABLE)
+        os.environ['SDL_VIDEO_CENTERED'] = '1'
         self.window.fill((255, 255, 255))
     def run(self):
         self.load()
-        game_mode = "menu"
         menu.affiche()
-
-        number_platform = 1
-        pos_platform = [(350, 700), (175, 543), (105, 403), (213, 243), (466, 72), (512, -92), (126, -241), (383, -378), (178, -512), (416, -639)]
+        game_mode = "menu"
+        change_window = False
+        start = True
         score = 0
-        vel_y = 1
-
-        all_platforms = pygame.sprite.Group()
-        all_bananes = pygame.sprite.Group()
-        all_sprites = pygame.sprite.Group()
-
-        jungle = Jungle()
-        all_sprites.add(jungle)
-        player = Player()
-        all_sprites.add(player)
 
         run = True
         while run:
             ### MENU ###
             if game_mode == "menu":
-                self.window = pygame.display.update((1520, 660))
+                if change_window:
+                    self.window = pygame.display.set_mode((1520, 660), pygame.RESIZABLE)
+                    os.environ['SDL_VIDEO_CENTERED'] = '1'
+                    change_window = False
                 event = pygame.event.poll()
                 if event.type == pygame.QUIT:
                     run = False
-
                 if event.type == pygame.KEYDOWN:
                     keys = pygame.key.get_pressed()
                     if keys[pygame.K_ESCAPE]:
                         run = False
-                        continue
 
                     menu.traitement_touches(event, keys)
                     if menu.menu_command == MenuCommand.GAME.value:
                         game_mode = "play"
+                        change_window = True
                     elif menu.menu_command == MenuCommand.SKIN.value:
                         boutique.mainsac()
                     elif menu.menu_command == MenuCommand.HELP.value:
@@ -69,16 +63,57 @@ class Game():
                         boutique.mainboutique()
                     elif menu.menu_command == MenuCommand.EXIT.value:
                         run = False
-
                 menu.affiche()
+
+
+            ### GAME OVER ###
+            if game_mode == "game over":
+                if change_window:
+                    self.window = pygame.display.set_mode((1520, 660), pygame.RESIZABLE)
+                    os.environ['SDL_VIDEO_CENTERED'] = '1'
+                    change_window = False
+                self.window.blit(pygame.image.load("sprite/game_over.png"), (0,0))
+                for event in pygame.event.get():
+                    if event.type == QUIT:
+                        run = False
+                if event.type == pygame.KEYDOWN:
+                    keys = pygame.key.get_pressed()
+                    if keys[pygame.K_RETURN]:
+                        game_mode = "menu"
+                        change_window = True
 
 
             ### GAME ###
             if game_mode == "play":
-                self.window = pygame.display.update((640, 750))
+                if change_window:
+                    self.window = pygame.display.set_mode((640, 750), pygame.RESIZABLE)
+                    os.environ['SDL_VIDEO_CENTERED'] = '1'
+                    change_window = False
                 for event in pygame.event.get():
                     if event.type == QUIT:
                         run = False
+                if event.type == pygame.KEYDOWN:
+                    keys = pygame.key.get_pressed()
+                    if keys[pygame.K_ESCAPE]:
+                        game_mode = "menu"
+                        change_window = True
+                        start = True
+
+                if start:
+                    number_platform = 1
+                    pos_platform = [(350, 700), (175, 543), (105, 403), (213, 243), (466, 72), (512, -92), (126, -241),
+                                    (383, -378), (178, -512), (416, -639)]
+                    vel_y = 1
+
+                    all_platforms = pygame.sprite.Group()
+                    all_bananes = pygame.sprite.Group()
+                    all_sprites = pygame.sprite.Group()
+
+                    jungle = Jungle()
+                    all_sprites.add(jungle)
+                    player = Player(boutique.skin_select)
+                    all_sprites.add(player)
+                    start = False
 
 
                 ### PLATFORM ###
@@ -114,7 +149,7 @@ class Game():
                 for platform in all_platforms:
                     platform.move(vel_y)
                     pos_platform[k] = platform.rect.center
-                    if platform.rect.y > 750:
+                    if platform.rect.y > 800:
                         pygame.sprite.Sprite.kill(platform)
                         number_platform -= 1
                         del pos_platform[k]
@@ -139,6 +174,10 @@ class Game():
 
                 ### UPDATE ###
                 player.move()
+                if player.rect.y > 800:
+                    game_mode = "game over"
+                    change_window = True
+                    start = True
                 player.update(all_platforms)
                 for entity in all_sprites:
                     self.window.blit(entity.image, entity.rect)

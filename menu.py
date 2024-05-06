@@ -24,8 +24,9 @@ last_menu_command = 4
 
 # Permet l'affichage du menu 
 def affiche():   
-    global liste_textes, current_menu_command 
-    screen_menu.fill(vars.couleur_noir) #on remplie la fenêtre avec la couleur noir.    
+    global liste_textes, current_menu_command
+    screen_menu.blit(pygame.image.load("sprite/Fond.png"), (0, 0))
+    #screen_menu.fill(vars.couleur_noir) #on remplie la fenêtre avec la couleur noir.
     tab = liste_textes
 
     # Centre le texte affiche grace au coordones X et Y

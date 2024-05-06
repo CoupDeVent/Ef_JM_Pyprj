@@ -3,7 +3,7 @@ import pygame #import la librairy pygame
 pygame.font.init()
 
 # hauteur et largeur de base
-fond = pygame.image.load("menu/assets/Fond.jpeg")
+fond = pygame.image.load("sprite/Fond.png")
 largeur = fond.get_width() # Affecte à la variable largeur, la largeur de l'image Fond.jpeg 
 hauteur = fond.get_height()# Affecte à la variable hauteur, la hauteur de l'image Fond.jpeg 
 

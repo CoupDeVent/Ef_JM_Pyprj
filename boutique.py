@@ -1,16 +1,18 @@
 import pygame #import la librairy pygame
 import vars, os
 
+import game
+
 # Création écran menu
 liste_textes_boutique = ["acheter","acheter","acheter","acheter","acheter"]
-liste_skin_boutique = ["Chaos : 1000 Or","Jumpee: 150 Or","Ordinary: 150 Or","King: 500 Or","Bee: 250 Or"]
-liste_price = [1000, 150, 150, 500, 250]
+liste_skin_boutique = ["Hat: 10 Banane","Headset: 50 Banane","Galaxy: 200 Banane","Angel: 500 Banane","King: 1000 Banane"]
+liste_price = [10, 50, 200, 500, 1000]
 
-liste_perso_possede = ['perso0.png']
+liste_perso_possede = ['default/default_r.png']
 perso_selectionne = liste_perso_possede[0]
 
 screen_boutique = pygame.display.set_mode((vars.largeur, vars.hauteur))  
-image_boutique = pygame.image.load("menu/assets/Fond.jpeg").convert()
+image_boutique = pygame.image.load("sprite/Fond.png").convert()
 #image_boutique = pygame.transform.scale(image_boutique, (vars.largeur, vars.hauteur))
 
 
@@ -20,8 +22,8 @@ text = vars.police.render(liste_textes_boutique[0], True, couleur_texte, vars.co
 textRect = text.get_rect()
 textRect.center = (vars.largeur // 2, vars.hauteur // 2 - 50)
 
-personnages = ['perso1.png', 'perso2.png', 'perso3.png', 'perso4.png', 'perso5.png']
-images_personnages = [pygame.image.load(os.path.join('menu/assets', perso)).convert_alpha() for perso in personnages]
+personnages = ['hat/hat_r.png', 'headset/headset_r.png', 'galaxy/galaxy_r.png', 'angel/angel_r.png', 'king/king_r.png']
+images_personnages = [pygame.image.load(os.path.join('sprite/player', perso)).convert_alpha() for perso in personnages]
 images_personnages_boutique = [pygame.transform.scale(image, (image.get_width()*3, image.get_height()*4)) for image in images_personnages]
 
 shop_command = -1
@@ -101,7 +103,7 @@ def affiche_boutique():
     yt_texte = 90
 
 
-    text_or = vars.police.render("OR : {}".format(vars.Or), True, (255, 255, 255), vars.couleur_noir)
+    text_or = vars.police.render("Banane : {}".format(vars.Or), True, (255, 255, 255), vars.couleur_noir)
     textRect_or = text_or.get_rect()
     textRect_or.center = (vars.largeur - 100, 30)
     screen_boutique.blit(text_or, textRect_or) 
@@ -169,7 +171,7 @@ def traitement_touches_boutique(event, keys):
                     textRect.center = (vars.largeur // 2, vars.hauteur // 2)
                     screen_boutique.blit(text, textRect) 
                 else:
-                    text = vars.police_achat.render("Pas assez d'Or !", True, couleur_texte_selection, vars.couleur_noir)
+                    text = vars.police_achat.render("Pas assez de Banane !", True, couleur_texte_selection, vars.couleur_noir)
                     textRect = text.get_rect()
                     textRect.center = (vars.largeur // 2, vars.hauteur // 2)
                     screen_boutique.blit(text, textRect) 
@@ -207,7 +209,7 @@ def mainboutique():
 # Affichage du sous menu sac
 def affiche_sac():       
     global liste_perso_possede, current_sac_command
-    images_personnages_sac = [pygame.image.load(os.path.join('menu/assets', perso)).convert_alpha() for perso in liste_perso_possede]
+    images_personnages_sac = [pygame.image.load(os.path.join('sprite/player', perso)).convert_alpha() for perso in liste_perso_possede]
     images_personnages_sac = [pygame.transform.scale(image, (image.get_width()*2, image.get_height()*2)) for image in images_personnages_sac]
 
     # Calcul du Centrage des cartes
@@ -236,7 +238,7 @@ def affiche_sac():
     screen_boutique.blit(text_selection, textRect_selection) 
 
 
-    text_or = vars.police.render("OR : {}".format(vars.Or), True, (255, 255, 255), vars.couleur_noir)
+    text_or = vars.police.render("Banane : {}".format(vars.Or), True, (255, 255, 255), vars.couleur_noir)
     textRect_or = text_or.get_rect()
     textRect_or.center = (vars.largeur - 100, 30)
     screen_boutique.blit(text_or, textRect_or) 
@@ -248,7 +250,8 @@ def affiche_sac():
 #Traitement des tocuhes dans le sous-menu sac
 def traitement_touches_sac(event, keys):    
     global liste_perso_possede, current_sac_command, last_sac_command, perso_selectionne
-    last_sac_command = len(liste_perso_possede) - 1     
+    last_sac_command = len(liste_perso_possede) - 1
+    skin_select = 0
     #pygame.event.clear()
     if event.type == pygame.KEYDOWN:
         if keys[pygame.K_RIGHT]:
@@ -272,6 +275,7 @@ def traitement_touches_sac(event, keys):
             textRect.center = (vars.largeur // 2, vars.hauteur // 2)
             screen_boutique.blit(text, textRect) 
             perso_selectionne = liste_perso_possede[current_sac_command]
+            skin_select = current_sac_command
         
     return True
 

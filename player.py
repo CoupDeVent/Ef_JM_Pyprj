@@ -7,12 +7,30 @@ WIDTH = 640
 HEIGHT = 750
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self, nb_skin):
         super().__init__()
-        self.image_right = pygame.image.load("sprite/player_r.png")
-        self.image_left = pygame.image.load("sprite/player_l.png")
-        self.image_run_right = pygame.image.load("sprite/player_run_r.png")
-        self.image_run_left = pygame.image.load("sprite/player_run_l.png")
+        skin = [["sprite/player/default/default_r.png","sprite/player/default/default_l.png",
+                 "sprite/player/default/default_run_r.png","sprite/player/default/default_run_l.png"],
+
+                ["sprite/player/hat/hat_r.png", "sprite/player/hat/hat_l.png",
+                 "sprite/player/hat/hat_run_r.png", "sprite/player/hat/hat_run_l.png"],
+
+                ["sprite/player/headset/headset_r.png", "sprite/player/headset/headset_l.png",
+                 "sprite/player/headset/headset_run_r.png", "sprite/player/headset/headset_run_l.png"],
+
+                ["sprite/player/galaxy/galaxy_r.png", "sprite/player/galaxy/galaxy_l.png",
+                 "sprite/player/galaxy/galaxy_run_r.png", "sprite/player/galaxy/galaxy_run_l.png"],
+
+                ["sprite/player/andgel/andgel_r.png", "sprite/player/andgel/andgel_l.png",
+                 "sprite/player/andgel/andgel_run_r.png", "sprite/player/andgel/andgel_run_l.png"],
+
+                ["sprite/player/king/king_r.png", "sprite/player/king/king_l.png",
+                 "sprite/player/king/king_run_r.png", "sprite/player/king/king_run_l.png"]]
+
+        self.image_right = pygame.image.load(skin[nb_skin][0])
+        self.image_left = pygame.image.load(skin[nb_skin][1])
+        self.image_run_right = pygame.image.load(skin[nb_skin][2])
+        self.image_run_left = pygame.image.load(skin[nb_skin][3])
         self.image = self.image_right
         self.rect = self.image.get_rect()
 
