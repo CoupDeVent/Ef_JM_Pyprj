@@ -91,4 +91,4 @@ class Player(pygame.sprite.Sprite):
                 self.jumping = False
             elif self.vel.y < 0:
                 self.vel.y = 0
-                self.pos.y = self.hits[0].rect.bottom + 75
+                self.pos.y = self.hits[0].rect.bottom + 74

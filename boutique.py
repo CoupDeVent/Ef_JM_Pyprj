@@ -1,7 +1,7 @@
 import pygame #import la librairy pygame
 import vars, os
 
-import game
+
 
 # Création écran menu
 liste_textes_boutique = ["acheter","acheter","acheter","acheter","acheter"]
@@ -251,7 +251,6 @@ def affiche_sac():
 def traitement_touches_sac(event, keys):    
     global liste_perso_possede, current_sac_command, last_sac_command, perso_selectionne
     last_sac_command = len(liste_perso_possede) - 1
-    skin_select = 0
     #pygame.event.clear()
     if event.type == pygame.KEYDOWN:
         if keys[pygame.K_RIGHT]:
@@ -274,8 +273,7 @@ def traitement_touches_sac(event, keys):
             textRect = text.get_rect()
             textRect.center = (vars.largeur // 2, vars.hauteur // 2)
             screen_boutique.blit(text, textRect) 
-            perso_selectionne = liste_perso_possede[current_sac_command]
-            skin_select = current_sac_command
+            perso_selectionne = current_sac_command
         
     return True
 

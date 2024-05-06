@@ -111,7 +111,7 @@ class Game():
 
                     jungle = Jungle()
                     all_sprites.add(jungle)
-                    player = Player(boutique.skin_select)
+                    player = Player(boutique.perso_selectionne)
                     all_sprites.add(player)
                     start = False
 
