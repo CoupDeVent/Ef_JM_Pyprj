@@ -10,18 +10,18 @@ liste_perso_possede = ['perso0.png']
 perso_selectionne = liste_perso_possede[0]
 
 screen_boutique = pygame.display.set_mode((vars.largeur, vars.hauteur))  
-image_boutique = pygame.image.load("./assets/Fond Shop.jpeg").convert()
-image_boutique = pygame.transform.scale(image_boutique, (vars.largeur, vars.hauteur))
+image_boutique = pygame.image.load("menu/assets/Fond.jpeg").convert()
+#image_boutique = pygame.transform.scale(image_boutique, (vars.largeur, vars.hauteur))
 
 
 couleur_texte = (255, 255, 255)
 couleur_texte_selection = (255, 0, 0)
 text = vars.police.render(liste_textes_boutique[0], True, couleur_texte, vars.couleur_noir)
 textRect = text.get_rect()
-textRect.center = (vars.largeur//2, vars.hauteur//2 - 50)
+textRect.center = (vars.largeur // 2, vars.hauteur // 2 - 50)
 
 personnages = ['perso1.png', 'perso2.png', 'perso3.png', 'perso4.png', 'perso5.png']
-images_personnages = [pygame.image.load(os.path.join('./assets', perso)).convert_alpha() for perso in personnages]
+images_personnages = [pygame.image.load(os.path.join('menu/assets', perso)).convert_alpha() for perso in personnages]
 images_personnages_boutique = [pygame.transform.scale(image, (image.get_width()*3, image.get_height()*4)) for image in images_personnages]
 
 shop_command = -1
@@ -103,7 +103,7 @@ def affiche_boutique():
 
     text_or = vars.police.render("OR : {}".format(vars.Or), True, (255, 255, 255), vars.couleur_noir)
     textRect_or = text_or.get_rect()
-    textRect_or.center = (vars.largeur-100, 30)
+    textRect_or.center = (vars.largeur - 100, 30)
     screen_boutique.blit(text_or, textRect_or) 
     
     for i, image in enumerate(images_personnages_boutique):
@@ -159,19 +159,19 @@ def traitement_touches_boutique(event, keys):
 
                 text = vars.police_achat.render("Bravo pour votre achat ! ", True, couleur_texte_selection, vars.couleur_noir)
                 textRect = text.get_rect()
-                textRect.center = (vars.largeur//2, vars.hauteur//2)
+                textRect.center = (vars.largeur // 2, vars.hauteur // 2)
                 screen_boutique.blit(text, textRect) 
 
             else:
                 if (liste_textes_boutique[current_shop_command] != "acheter"):
                     text = vars.police.render("Vous avez deja acheter ce skin il est disponible dans vos objets !", True, couleur_texte_selection, vars.couleur_noir)
                     textRect = text.get_rect()
-                    textRect.center = (vars.largeur//2, vars.hauteur//2)
+                    textRect.center = (vars.largeur // 2, vars.hauteur // 2)
                     screen_boutique.blit(text, textRect) 
                 else:
                     text = vars.police_achat.render("Pas assez d'Or !", True, couleur_texte_selection, vars.couleur_noir)
                     textRect = text.get_rect()
-                    textRect.center = (vars.largeur//2, vars.hauteur//2)
+                    textRect.center = (vars.largeur // 2, vars.hauteur // 2)
                     screen_boutique.blit(text, textRect) 
 
 
@@ -207,7 +207,7 @@ def mainboutique():
 # Affichage du sous menu sac
 def affiche_sac():       
     global liste_perso_possede, current_sac_command
-    images_personnages_sac = [pygame.image.load(os.path.join('./assets', perso)).convert_alpha() for perso in liste_perso_possede]
+    images_personnages_sac = [pygame.image.load(os.path.join('menu/assets', perso)).convert_alpha() for perso in liste_perso_possede]
     images_personnages_sac = [pygame.transform.scale(image, (image.get_width()*2, image.get_height()*2)) for image in images_personnages_sac]
 
     # Calcul du Centrage des cartes
@@ -218,7 +218,7 @@ def affiche_sac():
     cards = []
 
     # Affichage Carte Perso
-    x = (vars.largeur - (((len(images_personnages_sac) * card_l)) + ((len(images_personnages_sac) - 1) * 20)) )// 2
+    x = (vars.largeur - (((len(images_personnages_sac) * card_l)) + ((len(images_personnages_sac) - 1) * 20))) // 2
     
     for i, image in enumerate(images_personnages_sac):
         actif = False
@@ -232,13 +232,13 @@ def affiche_sac():
 
     text_selection = vars.police.render("Selectionner votre personnage !", True, (255, 255, 255), vars.couleur_noir)
     textRect_selection = text_selection.get_rect()
-    textRect_selection.center = (vars.largeur//2 - 22, (vars.hauteur - card_h)//2-40)
+    textRect_selection.center = (vars.largeur // 2 - 22, (vars.hauteur - card_h) // 2 - 40)
     screen_boutique.blit(text_selection, textRect_selection) 
 
 
     text_or = vars.police.render("OR : {}".format(vars.Or), True, (255, 255, 255), vars.couleur_noir)
     textRect_or = text_or.get_rect()
-    textRect_or.center = (vars.largeur-100, 30)
+    textRect_or.center = (vars.largeur - 100, 30)
     screen_boutique.blit(text_or, textRect_or) 
 
     group = pygame.sprite.Group(cards)
@@ -269,7 +269,7 @@ def traitement_touches_sac(event, keys):
 
             text = vars.police_achat.render("Ce Personnage à été sélectionné ! ", True, couleur_texte_selection, vars.couleur_noir)
             textRect = text.get_rect()
-            textRect.center = (vars.largeur//2, vars.hauteur//2)
+            textRect.center = (vars.largeur // 2, vars.hauteur // 2)
             screen_boutique.blit(text, textRect) 
             perso_selectionne = liste_perso_possede[current_sac_command]
         

@@ -1,6 +1,5 @@
-from enum import Enum
 import pygame #import la librairy pygame
-import vars, boutique, apropos
+import vars
 
 # Création écran menu
 liste_textes = [
@@ -17,7 +16,7 @@ couleur_texte = (255, 255, 255)
 couleur_texte_selection = (0, 255, 127)
 text = vars.police.render(liste_textes[0], True, couleur_texte, vars.couleur_noir)
 textRect = text.get_rect()
-textRect.center = (vars.largeur//2, vars.hauteur//2 - 50)
+textRect.center = (vars.largeur // 2, vars.hauteur // 2 - 50)
     
 menu_command = -1
 current_menu_command = 0
@@ -30,8 +29,8 @@ def affiche():
     tab = liste_textes
 
     # Centre le texte affiche grace au coordones X et Y
-    xt = vars.largeur//2
-    yt = vars.hauteur//2 - 80
+    xt = vars.largeur // 2
+    yt = vars.hauteur // 2 - 80
     
 
     # Cree une boucle pour afficher chaque chaine de caractere de la liste "liste_textes" soit "tab" ici

@@ -1,18 +1,9 @@
-from enum import Enum
-
-
 import pygame #import la librairy pygame
 pygame.init()
 
 import menu, apropos, boutique
 
-class MenuCommand(Enum):
-    MAIN = -1
-    GAME = 0
-    HELP = 1
-    SKIN = 2
-    SHOP = 3
-    EXIT = 4
+
 
 # Variables Globales
 clock = pygame.time.Clock() #créer un objet horloge qui peut être utilisé pour garder une trace du temps 

@@ -30,9 +30,8 @@ class Player(pygame.sprite.Sprite):
             self.vel.y = -15
             self.jumping = True
 
-    def move(self, all_platforms):
+    def move(self):
         self.acc = vec(0, 0.5)
-        self.hits = pygame.sprite.spritecollide(self, all_platforms, False)
 
         if self.last_key_pressed == "right":
             self.image = self.image_right
@@ -70,7 +69,7 @@ class Player(pygame.sprite.Sprite):
         if self.hits:
             if self.vel.y > 0:
                 self.vel.y = 0
-                self.pos.y = self.hits[0].rect.top
+                self.pos.y = self.hits[0].rect.top + 1
                 self.jumping = False
             elif self.vel.y < 0:
                 self.vel.y = 0
