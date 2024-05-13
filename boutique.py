@@ -273,7 +273,7 @@ def traitement_touches_sac(event, keys):
             textRect = text.get_rect()
             textRect.center = (vars.largeur // 2, vars.hauteur // 2)
             screen_boutique.blit(text, textRect) 
-            perso_selectionne = current_sac_command
+            perso_selectionne = liste_perso_possede[current_sac_command]
         
     return True
 

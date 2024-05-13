@@ -2,6 +2,7 @@ import pygame, os
 from pygame.locals import *
 from enum import Enum
 
+import vars
 from player import *
 from platform import *
 from banane import *
@@ -33,7 +34,6 @@ class Game():
         game_mode = "menu"
         change_window = False
         start = True
-        score = 0
 
         run = True
         while run:
@@ -159,12 +159,12 @@ class Game():
 
                 ### SCORE/BANANE ###
                 font = pygame.font.SysFont("BN Machine", 30, False)
-                txt_score = font.render("Bananes : " + str(score), True, (0, 0, 0))
+                txt_score = font.render("Bananes : " + str(vars.Or), True, (0, 0, 0))
 
 
                 hits_banane = pygame.sprite.spritecollide(player, all_bananes, True)
                 if hits_banane:
-                    score += 1
+                    vars.Or += 1
 
                 for banane in all_bananes:
                     banane.move(vel_y)

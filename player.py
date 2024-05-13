@@ -9,6 +9,7 @@ HEIGHT = 750
 class Player(pygame.sprite.Sprite):
     def __init__(self, nb_skin):
         super().__init__()
+        skin_convert = ['default/default_r.png', 'hat/hat_r.png', 'headset/headset_r.png', 'galaxy/galaxy_r.png', 'angel/angel_r.png', 'king/king_r.png']
         skin = [["sprite/player/default/default_r.png","sprite/player/default/default_l.png",
                  "sprite/player/default/default_run_r.png","sprite/player/default/default_run_l.png"],
 
@@ -21,16 +22,16 @@ class Player(pygame.sprite.Sprite):
                 ["sprite/player/galaxy/galaxy_r.png", "sprite/player/galaxy/galaxy_l.png",
                  "sprite/player/galaxy/galaxy_run_r.png", "sprite/player/galaxy/galaxy_run_l.png"],
 
-                ["sprite/player/andgel/andgel_r.png", "sprite/player/andgel/andgel_l.png",
-                 "sprite/player/andgel/andgel_run_r.png", "sprite/player/andgel/andgel_run_l.png"],
+                ["sprite/player/angel/angel_r.png", "sprite/player/angel/angel_l.png",
+                 "sprite/player/angel/angel_run_r.png", "sprite/player/angel/angel_run_l.png"],
 
                 ["sprite/player/king/king_r.png", "sprite/player/king/king_l.png",
                  "sprite/player/king/king_run_r.png", "sprite/player/king/king_run_l.png"]]
-
-        self.image_right = pygame.image.load(skin[nb_skin][0])
-        self.image_left = pygame.image.load(skin[nb_skin][1])
-        self.image_run_right = pygame.image.load(skin[nb_skin][2])
-        self.image_run_left = pygame.image.load(skin[nb_skin][3])
+        self.skin_select = skin_convert.index(nb_skin)
+        self.image_right = pygame.image.load(skin[self.skin_select][0])
+        self.image_left = pygame.image.load(skin[self.skin_select][1])
+        self.image_run_right = pygame.image.load(skin[self.skin_select][2])
+        self.image_run_left = pygame.image.load(skin[self.skin_select][3])
         self.image = self.image_right
         self.rect = self.image.get_rect()
 
@@ -91,4 +92,4 @@ class Player(pygame.sprite.Sprite):
                 self.jumping = False
             elif self.vel.y < 0:
                 self.vel.y = 0
-                self.pos.y = self.hits[0].rect.bottom + 74
+                self.pos.y = self.hits[0].rect.bottom + 85

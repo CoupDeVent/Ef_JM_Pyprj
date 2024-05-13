@@ -16,5 +16,5 @@ police_achat = pygame.font.SysFont('Comic Sans MS', 50)
 couleur_noir = (0,0,0)
 
 # Nombre d'or au debut du jeu
-Or = 2000
+Or = 0
 
