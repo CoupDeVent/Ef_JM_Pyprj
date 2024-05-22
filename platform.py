@@ -6,7 +6,7 @@ class Platform(pygame.sprite.Sprite):
     def __init__(self, last_platform_x, last_platform_y):
         super().__init__()
         self.image = ["sprite/platform.png"]
-        self.image = pygame.transform.scale(pygame.image.load(self.image[0]), (180, 25))
+        self.image = pygame.transform.scale(pygame.image.load(self.image[0]), (randint(100, 180), 25))
         self.rect = self.image.get_rect()
 
         self.min_distance_y_platform = 125

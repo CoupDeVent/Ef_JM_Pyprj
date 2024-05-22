@@ -38,19 +38,21 @@ class Player(pygame.sprite.Sprite):
         self.last_key_pressed = "right"
         self.jumping = False
 
-        self.pos = vec((320, 650))
-        self.vel = vec(0, 0)
-        self.acc = vec(0, 0)
-        self.ACC = 0.7
-        self.FRIC = -0.15
+        ### Variable pour l'équation de la trajectoire ###
+        self.pos = vec((320, 650)) # Vecteur position #
+        self.vel = vec(0, 0) # Vecteur vitesse #
+        self.acc = vec(0, 0) # Vecteur accélération #
+        self.ACC = 0.7 # Constante accélération #
+        self.FRIC = -0.15 # Constante friction #
+        ###
 
     def jump(self):
         if not self.jumping:
-            self.vel.y = -15
+            self.vel.y = -15 # Saut -> vitesse vertical = -15 #
             self.jumping = True
 
     def move(self):
-        self.acc = vec(0, 0.5)
+        self.acc = vec(0, 0.5) # Donne une accélération naturel vertical de 0.5 (gravité dans notre cas) #
 
         if self.last_key_pressed == "right":
             self.image = self.image_right
@@ -59,20 +61,20 @@ class Player(pygame.sprite.Sprite):
 
         self.pressed_keys = pygame.key.get_pressed()
         if self.pressed_keys[K_RIGHT]:
-            self.acc.x = self.ACC
+            self.acc.x = self.ACC # Donne une accélération de 0.7 en horizontal #
             self.image = self.image_run_right
             self.last_key_pressed = "right"
         if self.pressed_keys[K_LEFT]:
-            self.acc.x = -self.ACC
+            self.acc.x = -self.ACC # Donne une accélération de -0.7 en horizontal #
             self.image = self.image_run_left
             self.last_key_pressed = "left"
         if self.pressed_keys[K_UP]:
             self.jump()
 
 
-        self.acc.x += self.vel.x * self.FRIC
-        self.vel += self.acc
-        self.pos += self.vel + 0.5 * self.acc
+        self.acc.x += self.vel.x * self.FRIC # Recalcule de l'accélération horizontal avec la friction et la vitesse vertical #
+        self.vel += self.acc # Addition de la vitesse avec l'accélération (vertical et horizontal) #
+        self.pos += self.vel + 0.5 * self.acc # Recalcule de la position avec la vitesse, une costante 0.5 et l'accélération (vertical et horizontal) #
 
         self.rect.midbottom = self.pos
 

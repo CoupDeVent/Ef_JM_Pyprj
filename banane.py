@@ -1,5 +1,4 @@
 import pygame
-from random import *
 
 class Banane(pygame.sprite.Sprite):
     def __init__(self, pos_platform):

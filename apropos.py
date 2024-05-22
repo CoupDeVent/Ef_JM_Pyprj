@@ -27,7 +27,7 @@ def blit_text(surface, text, pos, font, color=pygame.Color('black')):
 
 def guide():
     screen.fill(pygame.Color('black'))
-    blit_text(screen, "But du jeu  : \nvous devez vous démener à sauter toujours plus haut à la recherche du meilleur score possible\n\nGuide du jeu\nTouches\n-« flèche droite » ou « d » te permet de te déplacer à droite \n-« flèche gauche » ou « q » te permet de te déplacer à gauche\n-« espace » te permet de sauter\n- « escape » te permet de quitter le jeu ou de quitter la partie si tu es en game. :  ", (10, 100), vars.police)
+    blit_text(screen, "But du jeu  : \nVous devez vous démener à sauter toujours plus haut afin d'obtenir le plus de Bananes.\n\nGuide du jeu\nTouches :\n      - « flèche droite » te permet de te déplacer à droite \n      - « flèche gauche » te permet de te déplacer à gauche\n      - « flèche haut » te permet de sauter\n      - « escape » te permet de quitter le jeu ou de quitter la partie si tu es en game.", (10, 100), vars.police)
     return True
 
 
